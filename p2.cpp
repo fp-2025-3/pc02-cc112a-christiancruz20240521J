@@ -10,13 +10,11 @@ int* buscar(
 ) {
     // Complete aqui 
     for(int* i=inicio; i<fin;i++){
-        if(equivale(*i, clave)){
-            return i;
+        if(equivale(*i, clave)){   //habia entendido que equivale contenia a los criterios, no era asi
+            return i;       //si o si la funcion debe devolver un puntero
         }
     }
-
     return fin;
-    
 }
 
 // Implemente aqui los Criterios de equivalencia
@@ -68,17 +66,18 @@ int main() {
     int* inicio = A;
     int* fin = A + 7;
 
-    int clave = 13;
+    int clave = 13;   //clave sirve para compararse con los demas, no se modifica
 
     // Imprima el arreglo
     imprimirArreglo(inicio, fin);
 
     // Llame a la funcion buscar para cada criterio implementado
+    // supuse que tenia que recorrer el array y buscar, en realidad se pone un puntero a cada caso
 
     int* rpta1 = buscar(inicio, fin, igual, clave);
     if(rpta1 != fin){
         cout << "Igualdad exacta: " << *rpta1 << " POS: " << rpta1 << endl;
-    } 
+    }  //aqui me falto implementar un puntero a la funcion y reciba la direccion de memoria
 
     int* rpta2 = buscar(inicio, fin, mismaParidad, clave);
     if(rpta2 != fin){
