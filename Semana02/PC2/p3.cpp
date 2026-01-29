@@ -25,7 +25,7 @@ void EsPico(int (*M)[5], int filas){
                 if( temp < p ){
                     esPico = false;
                 }
-                if(temp > p){
+                if(temp > p){    //compara el caso concreto
                     EsMayor = true;
                 }
             }
@@ -35,7 +35,7 @@ void EsPico(int (*M)[5], int filas){
                 if( temp < p ){
                     esPico = false;
                 }
-                if(temp > p){
+                if(temp > p){  
                     EsMayor = true;
                 }
             }
@@ -61,7 +61,7 @@ void EsPico(int (*M)[5], int filas){
             }
 
             if(esPico && EsMayor){
-                cout << "Pico en (" << i << "," << j << "): " << temp << endl;
+                cout << "Pico en (" << i << "," << j << "): " << temp << endl;  //imprima la coordenada y el valor
             
         }
     }
