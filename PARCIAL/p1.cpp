@@ -3,6 +3,9 @@
 #include <ctime>
 using namespace std;
 
+//intente usar The Painter's Partition Problem
+//pero no es posible aplicar debido a que TPP busca minimizar maximo mediante suma
+
 void LlenarArreglo(int *arr, int n){
     for(int i = 0; i < n; i++){
         *(arr + i) = rand() % 10;
@@ -15,6 +18,10 @@ void MostrarArreglo(int *arr, int n){
     }
     cout << endl;
 }
+
+//considerando que cada segmento empieza en A[0]
+//Se hace interesante cuando en el segmento hay 0's y 1's
+//si todos son >=2 el programa arroja todo el array como rpta
 
 int MaxCosto(int *A, int n, int i){
     if(i == n){
