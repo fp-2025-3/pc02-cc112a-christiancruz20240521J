@@ -1,13 +1,33 @@
 #include <iostream>
 using namespace std;
 
-void AgregarEstudiantes(double *&codigos, double *promedios, int &n) {
-    for(int i = 0; i < n; i++){
-        cout << "Ingrese el codigo del estudiante " << (i + 1) << ":";
-        cin >> *(codigos + i);
-        cout << "Ingrese el promedio del estudiante " << (i + 1) << ":";
-        cin >> *(promedios + i);
+void AgregarEstudiantes(double *&codigos, double *&promedios, int &cantidad, int &capacidad) {
+
+    if(cantidad == capacidad){
+        capacidad *= 2;
+
+        double *Ncodigos = new double[capacidad];
+        double *Npromedios = new double[capacidad];
+
+        for(int i = 0; i< cantidad; i++){
+            *(Ncodigos + i) = *(codigos + i);
+            *(Npromedios + i) = *(promedios + i);
+        }
+
+        delete[] codigos;
+        delete[] promedios;
+
+        codigos = Ncodigos;
+        promedios = Npromedios;
     }
+
+    cout << "Ingrese el codigo del estudiante " << (cantidad + 1) << ":";
+    cin >> *(codigos + cantidad);
+    cout << "Ingrese el promedio del estudiante " << (cantidad + 1) << ":";
+    cin >> *(promedios + cantidad);
+
+    cantidad++;
+
 }
 
 void MostrarEstudiantes(double *codigos, double *promedios, int n) {
@@ -16,43 +36,54 @@ void MostrarEstudiantes(double *codigos, double *promedios, int n) {
     }
 }
 
-double* EliminarDesaprobados(double *codigos, double *promedios, int &n) {
+void EliminarDesaprobados(double *&codigos, double *&promedios, int &n) {
     int cont = 0;
-    for(int i = 0; i < n; i++){
-        if(*(promedios + i) >= 10){  // Cambio aquí: >= en lugar de >
-            *(codigos + cont) = *(codigos + i);
-            *(promedios + cont) = *(promedios + i);
+    for (int i = 0; i < n; i++) {
+        if (promedios[i] >= 10) {
+            codigos[cont] = codigos[i];
+            promedios[cont] = promedios[i];
             cont++;
         }
     }
-    n = cont;  // Actualizar n con los aprobados
-    return codigos;
+
+    double *codigosN = new double[cont];
+    double *promediosN = new double[cont];
+
+    for (int i = 0; i < cont; i++) {
+        codigosN[i] = codigos[i];
+        promediosN[i] = promedios[i];
+    }
+    
+    delete[] codigos;
+    delete[] promedios;
+
+    codigos = codigosN;
+    promedios = promediosN;
+    n = cont;
 }
 
 int main(){
 
-    int n = 5;
+    int capacidadI = 3;
+    int cantidad = 0;
 
-    double *codigos = new double[n];
-    double *promedios = new double[n];
+    double *codigos = new double[capacidadI];
+    double *promedios = new double[capacidadI];
 
-    AgregarEstudiantes(codigos, promedios, n);
+    int capacidad = capacidadI;
+
+    for(int i=0; i<5; i++){
+        AgregarEstudiantes(codigos, promedios, cantidad, capacidad);
+    }
 
     cout << "\nEstudiantes registrados:\n";
-    MostrarEstudiantes(codigos, promedios, n);
+    MostrarEstudiantes(codigos, promedios, cantidad);
 
     cout << "\nFiltrando estudiantes desaprobados...\n";
-    EliminarDesaprobados(codigos, promedios, n);
-
-    double *codigosAprobados = new double[n];
-    double *promediosAprobados = new double[n];
-    for(int i = 0; i < n; i++){
-        *(codigosAprobados + i) = *(codigos + i);
-        *(promediosAprobados + i) = *(promedios + i);
-    }
+    EliminarDesaprobados(codigos, promedios, cantidad);
     
     cout << "\nEstudiantes aprobados:\n";
-    MostrarEstudiantes(codigos, promedios, n);
+    MostrarEstudiantes(codigos, promedios, cantidad);
 
     delete[] codigos;
     delete[] promedios;
