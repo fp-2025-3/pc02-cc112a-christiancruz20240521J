@@ -76,7 +76,7 @@ int comparar_palabras(const char* a, const char* b){
 void ordenar(char* v[], int n){
     for(int i=0; i<n; i++){
         for(int j=0; j < n - i- 1; j++){
-            if(comparar_palabras(v[j], v[j+1]) < 0){
+            if(comparar_palabras(v[j], v[j+1]) > 0){
                 MySwap(v[j], v[j+1]);
             }
         }
